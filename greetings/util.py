@@ -1,0 +1,11 @@
+import asyncio
+
+
+async def get_local_ip():
+    loop = asyncio.get_event_loop()
+    transport, protocol = await loop.create_datagram_endpoint(
+        asyncio.DatagramProtocol,
+        remote_addr=('8.8.8.8', 80))
+    result = transport.get_extra_info('sockname')[0]
+    transport.close()
+    return result
